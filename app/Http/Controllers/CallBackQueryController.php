@@ -62,8 +62,6 @@ class  CallBackQueryController extends SellController
                 break;
         }
     }
-
-
     public function confirmValidation($id,$chat_id){
         Member::where('id',$id)->update([
             'active'=>2
