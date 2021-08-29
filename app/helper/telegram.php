@@ -44,6 +44,15 @@ if (!function_exists('editMessageText')){
         }
     }
 }
+if (!function_exists('sendPhoto')){
+    function sendPhoto($arr){
+        try{
+            return Telegram::sendPhoto($arr);
+        }catch (Exception $e){
+
+        }
+    }
+}
 if(!function_exists('messageType')) {
     function messageType($arr = [])
     {

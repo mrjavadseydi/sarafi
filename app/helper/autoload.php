@@ -5,6 +5,7 @@ use Illuminate\Filesystem\Cache;
 
 require_once(__DIR__."/telegram.php");
 require_once(__DIR__."/keyboard.php");
+require_once(__DIR__."/pay.php");
 
 
 function getConfig($name)

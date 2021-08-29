@@ -100,22 +100,22 @@ if(!function_exists('sendPhone')){
     }
 }
 if(!function_exists('activateUser')){
-    function activateUser($id)
+    function activateUser($chat_id,$id)
     {
         return keyboard::make([
             'inline_keyboard' => [
                 [
                     [
                         'text' => "تایید",
-                        'callback_data' => "activate-$id"
+                        'callback_data' => "activate-$id-$chat_id"
                     ],
                     [
                         'text' => "رد",
-                        'callback_data' => "deactive-$id"
+                        'callback_data' => "deactive-$id-$chat_id"
                     ],
                     [
                         'text' => "بلاک",
-                        'callback_data' => "block-$id"
+                        'callback_data' => "block-$id-$chat_id"
                     ],
 
                 ]
@@ -123,7 +123,30 @@ if(!function_exists('activateUser')){
         ]);
     }
 }
+if(!function_exists('acceptPay')){
+    function acceptPay($chat_id,$id)
+    {
+        return keyboard::make([
+            'inline_keyboard' => [
+                [
+                    [
+                        'text' => "تایید",
+                        'callback_data' => "pay-$id-$chat_id"
+                    ],
+                    [
+                        'text' => "رد",
+                        'callback_data' => "notPay-$id-$chat_id"
+                    ],
+                    [
+                        'text' => "بلاک",
+                        'callback_data' => "block-$id-$chat_id"
+                    ],
 
+                ]
+            ],
+        ]);
+    }
+}
 if(!function_exists('WalletKey')){
     function WalletKey()
     {

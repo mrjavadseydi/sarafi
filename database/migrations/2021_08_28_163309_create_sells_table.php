@@ -17,10 +17,11 @@ class CreateSellsTable extends Migration
             $table->id();
             $table->string('chat_id');
             $table->string('cache_id')->nullable();
+            $table->string('photo')->nullable();
             $table->double('amount')->nullable();
             $table->double('price')->nullable();
             $table->tinyInteger('status')->nullable();
-            $table->string('vocher')->nullable();
+            $table->string('voocher')->nullable();
             $table->string('activator')->nullable();
             $table->timestamps();
         });

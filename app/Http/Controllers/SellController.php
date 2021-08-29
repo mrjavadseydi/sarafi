@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sell;
 use Illuminate\Http\Request;
 
 class SellController extends ActivationController
@@ -24,6 +25,68 @@ class SellController extends ActivationController
             sendMessage([
                 'chat_id'=>$this->chat_id,
                 'text'=>"لطفا مقدار مورد نظر را وارد کنید ! \n قیمت هر دلار امروز ".getConfig('sellPrice'),
+                'reply_markup'=>backButton()
+            ]);
+        }
+    }
+    public function receiveSellCount(){
+        if(is_numeric($this->text)){
+            $price =round(getConfig('sellPrice') * $this->text , 1);
+            $card = getConfig('card');
+            $bank = getConfig('bank');
+            $holder = getConfig('holder');
+            $text = "هزینه قابل پرداخت : $price\n مبلغ مورد نظر را به شماره کارت  $card  بانک $bank  به نام $holder پرداخت و رسید ان را در همین بخش ارسال نمایید";
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>$text,
+                'reply_markup'=>backButton()
+            ]);
+            setState($this->chat_id,'GiveResid');
+            $sell = Sell::create([
+                'chat_id'=>$this->chat_id,
+                'amount'=>$this->text,
+                'price'=>$price,
+                'status'=>0
+            ]);
+            \Cache::put('sendResid'.$this->chat_id,$sell->id);
+        }else{
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>"لطفا مقدار مورد نظر را با اعداد لاتین  وارد کنید ! \n قیمت هر دلار امروز ".getConfig('sellPrice'),
+                'reply_markup'=>backButton()
+            ]);
+        }
+    }
+    public function receiveResid($req){
+        if ($this->message_type=="photo"){
+            $photo = end($req["message"]['photo'])['file_id'];
+            $sell_id = \Cache::get('sendResid'.$this->chat_id);
+            $sell = Sell::whereId($sell_id)->first();
+            $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n
+            $this->user->name \n
+            $this->user->national_id \n
+            $this->user->phone \n
+            ".number_format($sell->price)."
+            $sell->amount \$
+            ";
+            sendPhoto([
+                'chat_id'=>getConfig('residGroup'),
+                'caption'=>$text,
+                'photo'=>$photo,
+                'reply_markup'=>acceptPay($this->chat_id,$sell_id)
+            ]);
+            $sell->update([
+                'photo'=>$photo
+            ]);
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>"تصویر رسید برای مدیریت ارسال شد ، پس از تایید ووچر برای شما ارسال میشود!",
+                'reply_markup'=>backButton()
+            ]);
+        }else{
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>"تنها تصویر مورد قبول میباشد",
                 'reply_markup'=>backButton()
             ]);
         }
