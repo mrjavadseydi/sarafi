@@ -35,6 +35,15 @@ if(!function_exists('joinCheck')){
         }
     }
 }
+if (!function_exists('editMessageText')){
+    function editMessageText($arr){
+        try{
+           return Telegram::editMessageText($arr);
+        }catch (Exception $e){
+
+        }
+    }
+}
 if(!function_exists('messageType')) {
     function messageType($arr = [])
     {

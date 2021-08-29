@@ -122,7 +122,8 @@ class  ActivationController extends TelegramController
         if ($this->message_type=="video") {
             $video = $req['message']['video']['file_id'];
             Member::where('chat_id',$this->chat_id)->update([
-                'video'=>$video
+                'video'=>$video,
+                'active'=>1
             ]);
             sendMessage([
                 'chat_id'=>$this->chat_id,
@@ -137,7 +138,7 @@ class  ActivationController extends TelegramController
             try {
                 Telegram::sendMediaGroup([
                     'chat_id'=>getConfig('validationGroup'),
-                    'reply_markup'=>activateUser($this->user->id),
+
                     'media'=>[
                         [
                             'type'=>'photo',
@@ -153,6 +154,11 @@ class  ActivationController extends TelegramController
                             'media'=>$video
                         ]
                     ]
+                ]);
+                sendMessage([
+                    'chat_id'=>getConfig('validationGroup'),
+                    'text'=>"ایا مدارد بالا را تایید میکنید ؟",
+                    'reply_markup'=>activateUser($this->user->id),
                 ]);
             }catch (Exception $e){
 

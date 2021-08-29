@@ -25,6 +25,7 @@ class CreateMembersTable extends Migration
             $table->tinyInteger('active')->default(0);
             $table->integer('custom_price')->nullable();
             $table->boolean('blocked')->default(false);
+            $table->boolean('admin')->default(false);
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class TelegramController extends ActivationController
     public function index(Request $request){
         $req = $request->toArray();
         $this->message_type = messageType($req);
+        if ($this->message_type== "callback_query"){
+            $this->initCallBack($req);
+            exit();
+        }
         $this->text = $req['message']['text']?? "//**";
         $this->chat_id = isset($req['message']['chat']['id']) ?? $req['message']['chat']['id'];
         $this->from_id = isset($req['message']['from']['id']) ?? $req['message']['from']['id'];
