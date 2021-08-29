@@ -52,6 +52,14 @@ class  CallBackQueryController extends SellController
                     'message_id'=>$message_id
                 ]);
                 break;
+            case "paid":
+                $this->paidBuyVoocher($ex[1],$ex[2]);
+                editMessageText([
+                    'chat_id'=>$chat_id,
+                    'text'=>$text . "\n در " .now()."واریز شد \n" ,
+                    'message_id'=>$message_id
+                ]);
+                break;
         }
     }
 
@@ -117,5 +125,17 @@ EV";
             'reply_markup'=>backButton()
         ]);
 
+    }
+    public function paidBuyVoocher($id,$chat_id){
+        $buy =Buy::whereId($id)->first();
+        $buy->update([
+            'paid'=>true,
+            'status'=>2
+        ]);
+        sendMessage([
+            'chat_id'=>$chat_id,
+            'text'=>"مبلغ $buy->price به حساب شما واریز شد \n با توجه اینکه واریز بصورت شبا بوده ،‌ممکن است تا ۷۲ ساعت واریز از طرف بانک به طول بکشد ، در صورت هرگونه مشکل میتوانید با پشتیبانی در ارتباط باشید  ",
+            'reply_markup'=>backButton()
+        ]);
     }
 }

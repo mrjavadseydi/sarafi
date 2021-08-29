@@ -64,6 +64,36 @@ class  ActivationController extends TelegramController
             ]);
             sendMessage([
                 'chat_id'=>$this->chat_id,
+                'text'=>'لطفا شماره شبا خود را ارسال کنید ',
+                'reply_markup'=>backButton()
+            ]);
+            setState($this->chat_id,'SendShaba');
+        }else{
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>'کد ملی شما صحیح نمی باشد',
+                'reply_markup'=>backButton()
+            ]);
+        }
+    }
+    public function receiveShaba(){
+        Member::where('chat_id',$this->chat_id)->update([
+            'shaba'=>$this->text
+        ]);
+        sendMessage([
+            'chat_id'=>$this->chat_id,
+            'text'=>'لطفا شماره کارت خود را ارسال کنید',
+            'reply_markup'=>backButton()
+        ]);
+        setState($this->chat_id,'SendCardNumber');
+    }
+    public function receiveCard(){
+        if(is_numeric($this->text)&&strlen($this->text)==16 ){
+            Member::where('chat_id',$this->chat_id)->update([
+                'card'=>$this->text
+            ]);
+            sendMessage([
+                'chat_id'=>$this->chat_id,
                 'text'=>'لطفا یک عکس از کارت ملی خود ارسال کنید',
                 'reply_markup'=>backButton()
             ]);

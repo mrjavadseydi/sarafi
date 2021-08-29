@@ -63,7 +63,9 @@ class TelegramController extends ActivationController
                 case "💳 خرید از ما":
                     $this->initSell($req);
                     break;
-
+                case "💰 فروش به ما":
+                    $this->initBuy();
+                    break;
                 case "🟢 احراز هویت 🟢" :
                     $this->initActivate($req);
                     break;

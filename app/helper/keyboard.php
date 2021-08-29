@@ -147,6 +147,22 @@ if(!function_exists('acceptPay')){
         ]);
     }
 }
+if(!function_exists('paidButton')){
+    function paidButton($chat_id,$id)
+    {
+        return keyboard::make([
+            'inline_keyboard' => [
+                [
+                    [
+                        'text' => "واریز شد!",
+                        'callback_data' => "paid-$id-$chat_id"
+                    ]
+
+                ]
+            ],
+        ]);
+    }
+}
 if(!function_exists('WalletKey')){
     function WalletKey()
     {

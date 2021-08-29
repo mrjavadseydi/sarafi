@@ -21,6 +21,8 @@ class CreateMembersTable extends Migration
             $table->string('national_id')->nullable();
             $table->string('national_card')->nullable();
             $table->string('video')->nullable();
+            $table->string('shaba')->nullable();
+            $table->string('card')->nullable();
             $table->string('bank_card')->nullable();
             $table->tinyInteger('active')->default(0);
             $table->integer('custom_price')->nullable();

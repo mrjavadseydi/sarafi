@@ -18,12 +18,10 @@ class CreateBuysTable extends Migration
             $table->string('chat_id');
             $table->string('cache_id')->nullable();
             $table->tinyInteger('status')->nullable();
-            $table->string('vocher')->nullable();
+            $table->string('voocher')->nullable();
             $table->string('activator')->nullable();
-            $table->string('shaba')->nullable();
-            $table->string('card')->nullable();
-            $table->string('card_holder')->nullable();
             $table->double('amount')->nullable();
+            $table->double('price')->nullable();
             $table->boolean('paid')->default(false);
             $table->timestamps();
         });

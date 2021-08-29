@@ -60,7 +60,7 @@ class SellController extends ActivationController
     public function receiveResid($req){
         if ($this->message_type=="photo"){
             $photo = end($req["message"]['photo'])['file_id'];
-            $sell_id = \Cache::get('sendResid'.$this->chat_id);
+            $sell_id = \Cache::pull('sendResid'.$this->chat_id);
             $sell = Sell::whereId($sell_id)->first();
             $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n
             $this->user->name \n
