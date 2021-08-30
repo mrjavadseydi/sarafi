@@ -30,14 +30,46 @@ if(!function_exists('adminButton')){
     {
         $btn = Keyboard::button(
               [
-                ['ارسال پیام به شخص خاص'],
-                ['تنظیم قیمت خرید و فروش'],
-                ['تنظیم متن دکمه تماس با ما'],
-                ['تنظیم آیدی پشتیبانی'],
+
+                ['تنظیم متن','تنظیم گروه'],
+                ['تنظیم قیمت','تنظیم کانال'],
                 ['موجودی حساب'],
                 ['ارسال همگانی'],
                 ['بازگشت ↪️']
               ]
+        );
+        return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
+    }
+}
+if(!function_exists('setTextButton')){
+    function setTextButton()
+    {
+        $btn = Keyboard::button(
+            [
+                ['تماس با ما'],
+                ['سوالات متداول'],
+                ['راهنما'],
+                ['قوانین'],
+                ['عضویت در کانال'],
+                ['شماره کارت'],
+                ['بانک کارت'],
+                ['نام صاحب کارت'],
+                ['بازگشت ↪️']
+            ]
+        );
+        return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
+    }
+}
+if(!function_exists('setGroupButton')){
+    function setGroupButton()
+    {
+        $btn = Keyboard::button(
+            [
+                ['گروه خرید'],
+                ['گروه فروش'],
+                ['گروه احراز هویت'],
+                ['بازگشت ↪️']
+            ]
         );
         return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
     }
