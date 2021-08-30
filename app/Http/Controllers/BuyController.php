@@ -85,7 +85,7 @@ class BuyController extends CallBackQueryController
                 ]);
                 $text = "یک خرید موفق \n تعداد : $result \n مبلغ : ".number_format($price)." \n لطفا به شماره کارت  ".$this->user->card . " به نام ".$this->user->name ." واریز شود \n شبا :".$this->user->shaba ;
                 sendMessage([
-                    'chat_id'=>getConfig('payOut'),
+                    'chat_id'=>getConfig('payOutGroup'),
                     'text'=>$text,
                     'reply_markup'=>paidButton($this->chat_id,$buy_id)
                 ]);

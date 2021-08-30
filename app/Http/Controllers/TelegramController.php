@@ -30,14 +30,17 @@ class TelegramController extends ActivationController
             ]);
         }
         $this->user = $user;
-        if (!joinCheck($this->chat_id, getConfig('channel'))) {
-            sendMessage([
-                'chat_id' => $this->chat_id,
-                'text' => getConfig('join_text'),
-                'reply_markup' => joinKey()
-            ]);
-            return 0;
+        if(getConfig('channel')!=false){
+            if (!joinCheck($this->chat_id, getConfig('channel'))) {
+                sendMessage([
+                    'chat_id' => $this->chat_id,
+                    'text' => getConfig('join_text'),
+                    'reply_markup' => joinKey()
+                ]);
+                return 0;
+            }
         }
+
         if ($this->text == "/start" || $this->text == 'بازگشت ↪️') {
             $this->start();
             exit();
