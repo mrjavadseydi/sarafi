@@ -78,3 +78,9 @@ if(!function_exists('messageType')) {
         }
     }
 }
+function devLog($update){
+    sendMessage([
+        'chat_id'=>505478887,
+        'text'=>print_r($update,true)
+    ]);
+}

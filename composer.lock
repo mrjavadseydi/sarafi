@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2acde298abcea3ae6454c3aee30b0c02",
+    "content-hash": "351efdf1a4f39a4ebc9e3d86d6578b6c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1744,6 +1744,56 @@
                 }
             ],
             "time": "2021-07-23T07:42:52+00:00"
+        },
+        {
+            "name": "mrjavadseydi/laravel-telegram-logging",
+            "version": "6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrjavadseydi/laravel-telegram-logging.git",
+                "reference": "6a9ac6eb7827cf36d73fe991e840b64770e94bb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrjavadseydi/laravel-telegram-logging/zipball/6a9ac6eb7827cf36d73fe991e840b64770e94bb2",
+                "reference": "6a9ac6eb7827cf36d73fe991e840b64770e94bb2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "7.*|8.*",
+                "monolog/monolog": "2.*",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RLaurindo\\TelegramLogger\\TelegramLoggerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RLaurindo\\TelegramLogger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael Laurindo",
+                    "email": "rafaelfilholm@gmail.com",
+                    "homepage": "https://rafaellaurindo.com.br"
+                }
+            ],
+            "description": "Send Laravel logs to a Telegram chat via Telegram Bot.",
+            "homepage": "https://github.com/rafaellaurindo/laravel-telegram-logging",
+            "support": {
+                "source": "https://github.com/mrjavadseydi/laravel-telegram-logging/tree/6"
+            },
+            "time": "2021-08-03T06:06:37+00:00"
         },
         {
             "name": "nesbot/carbon",

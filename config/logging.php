@@ -46,7 +46,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
-
+        'telegram' => [
+            'driver' => 'custom',
+            'via'    => \RLaurindo\TelegramLogger\TelegramLogger::class,
+            'level'  => 'debug',
+        ],
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
