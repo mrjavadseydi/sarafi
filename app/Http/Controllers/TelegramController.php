@@ -30,6 +30,17 @@ class TelegramController extends ActivationController
             ]);
         }
         $this->user = $user;
+        if($this->user->admin){
+            switch ($this->user->state){
+
+            }
+            switch ($this->text){
+                case "/panel":
+                    $this->iniAdmin();
+                    break;
+
+            }
+        }
         if(getConfig('channel')!=false){
             if (!joinCheck($this->chat_id, getConfig('channel'))) {
                 sendMessage([
@@ -118,6 +129,7 @@ class TelegramController extends ActivationController
                 case "💸 خرید/فروش های من":
                     $this->userTransaction();
                     break;
+
                 default :
                     break;
 

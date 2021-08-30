@@ -73,18 +73,7 @@ if(!function_exists('setGroupButton')){
         return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
     }
 }
-if(!function_exists('adminButton')){
-    function adminButton()
-    {
-        $btn = Keyboard::button(
-       [
-           ['فروش های من', 'خرید های من'],
-           ['بازگشت ↪️']
-       ]
-        );
-        return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
-    }
-}
+
 if(!function_exists('activationButton')){
     function activationButton()
     {
