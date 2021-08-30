@@ -63,6 +63,20 @@ class UtilityController extends BuyController
             ]);
         }
     }
+    public function getFAQ(){
+        sendMessage([
+            'chat_id'=>$this->chat_id,
+            'text'=>getConfig('faq'),
+            'reply_markup'=>backButton()
+        ]);
+    }
+    public function getContactUs(){
+        sendMessage([
+            'chat_id'=>$this->chat_id,
+            'text'=>getConfig('contactUs'),
+            'reply_markup'=>backButton()
+        ]);
+    }
     public function userTransaction(){
         if($this->user->active == 0){
             sendMessage([
