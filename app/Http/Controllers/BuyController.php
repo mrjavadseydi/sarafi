@@ -33,7 +33,8 @@ class BuyController extends CallBackQueryController
         if(strlen($this->text)==10){
             $buy = Buy::create([
                 'chat_id'=>$this->chat_id,
-                'voocher'=>$this->text
+                'voocher'=>$this->text,
+                'status'=>-2
             ]);
             \Cache::put('getActivator'.$this->chat_id,$buy->id);
             setState($this->chat_id,'getActivator');
