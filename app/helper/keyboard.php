@@ -30,7 +30,6 @@ if(!function_exists('adminButton')){
     {
         $btn = Keyboard::button(
               [
-
                 ['تنظیم متن','تنظیم گروه'],
                 ['تنظیم قیمت','تنظیم کانال'],
                 ['موجودی حساب'],
