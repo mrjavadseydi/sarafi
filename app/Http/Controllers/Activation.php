@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
-use Illuminate\Http\Request;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use App\Http\Controllers\TelegramController;
+
+
 
 Trait  Activation
 {

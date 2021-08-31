@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sell;
-use Illuminate\Http\Request;
-use App\Http\Controllers\ActivationController;
+use Illuminate\Support\Facades\Cache;
+
+
 trait CallSell
 {
     public function initSell($req){
@@ -48,7 +49,7 @@ trait CallSell
                 'price'=>$price,
                 'status'=>0
             ]);
-            \Cache::put('sendResid'.$this->chat_id,$sell->id);
+            Cache::put('sendResid'.$this->chat_id,$sell->id);
         }else{
             sendMessage([
                 'chat_id'=>$this->chat_id,
@@ -60,7 +61,7 @@ trait CallSell
     public function receiveResid($req){
         if ($this->message_type=="photo"){
             $photo = end($req["message"]['photo'])['file_id'];
-            $sell_id = \Cache::pull('sendResid'.$this->chat_id);
+            $sell_id = Cache::pull('sendResid'.$this->chat_id);
             $sell = Sell::whereId($sell_id)->first();
             $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n
             $this->user->name \n

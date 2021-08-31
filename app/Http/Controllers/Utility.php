@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Buy;
 use App\Models\Sell;
-use Illuminate\Http\Request;
-use App\Http\Controllers\BuyController;
+
+
 trait Utility
 {
 

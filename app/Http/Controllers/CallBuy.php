@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buy;
-use Illuminate\Http\Request;
-use App\Http\Controllers\CallBackQueryController;
+use Illuminate\Support\Facades\Cache;
+
+
 trait CallBuy
 {
     public function initBuy(){
@@ -36,7 +37,7 @@ trait CallBuy
                 'voocher'=>$this->text,
                 'status'=>-2
             ]);
-            \Cache::put('getActivator'.$this->chat_id,$buy->id);
+            Cache::put('getActivator'.$this->chat_id,$buy->id);
             setState($this->chat_id,'getActivator');
             sendMessage([
                 'chat_id'=>$this->chat_id,
@@ -57,7 +58,7 @@ trait CallBuy
                 'chat_id'=>$this->chat_id,
                 'text'=>"در حال دریافت اطلاعات ووچر و ثبت در حساب !لطفا صبر کنید "
             ]);
-            $buy_id = \Cache::pull('getActivator'.$this->chat_id);
+            $buy_id = Cache::pull('getActivator'.$this->chat_id);
             $buy = Buy::whereId($buy_id)->first();
 
             $result = ActiveVoucher($buy->voocher,$this->text);

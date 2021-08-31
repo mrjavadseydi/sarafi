@@ -1,8 +1,7 @@
 <?php
 
 use App\Models\Config;
-use Illuminate\Filesystem\Cache;
-
+use \Illuminate\Support\Facades\Cache ;
 require_once(__DIR__ . "/telegram.php");
 require_once(__DIR__ . "/keyboard.php");
 require_once(__DIR__ . "/pay.php");

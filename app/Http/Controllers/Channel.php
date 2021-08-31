@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\GroupController;
+
+
 trait Channel
 {
     public function initChannel(){

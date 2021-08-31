@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use \Illuminate\Support\Facades\Cache ;
 use Illuminate\Http\Request;
 
 class TelegramController extends Controller
 {
-    public function __construct()
-    {
-    }
 
     public $message_type;
     public $text;
@@ -20,13 +18,11 @@ class TelegramController extends Controller
     public function index(Request $request)
     {
         $req = $request->toArray();
-        devLog($req);
-        if(\Cache::has($req['update_id'])){
+        if(Cache::has($req['update_id'])){
             die();
         }else{
-            \Cache::put($req['update_id'],60,60);
+            Cache::put($req['update_id'],60,60);
         }
-//        die();
         $this->message_type = messageType($req);
         if ($this->message_type == "callback_query") {
             $this->initCallBack($req);
