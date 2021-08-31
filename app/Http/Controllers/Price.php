@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class PriceController extends GroupController
+use App\Http\Controllers\GroupController;
+trait Price
 {
     public function initSetPrice(){
         $price = number_format(getConfig('buyPrice'));

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class GroupController extends AdminSettingController
+use App\Http\Controllers\AdminSettingController;
+trait Group
 {
     public function setResidGroup(){
         sendMessage([

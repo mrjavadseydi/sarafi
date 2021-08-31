@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Sell;
 use Illuminate\Http\Request;
-
-class  CallBackQueryController extends SellController
+use App\Http\Controllers\SellController;
+trait  CallBackQuery
 {
     public function initCallBack($req){
         $data = $req["callback_query"]['data'];

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Sell;
 use Illuminate\Http\Request;
-
-class SellController extends ActivationController
+use App\Http\Controllers\ActivationController;
+trait CallSell
 {
     public function initSell($req){
         if($this->user->active == 0){

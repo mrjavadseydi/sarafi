@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Buy;
 use Illuminate\Http\Request;
-
-class BuyController extends CallBackQueryController
+use App\Http\Controllers\CallBackQueryController;
+trait CallBuy
 {
     public function initBuy(){
         if($this->user->active == 0){

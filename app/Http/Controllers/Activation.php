@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Http\Controllers\TelegramController;
 
-class  ActivationController extends TelegramController
+Trait  Activation
 {
     public function initActivate($req){
         if ($this->user->activate==2){

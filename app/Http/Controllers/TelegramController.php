@@ -5,43 +5,82 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Http\Request;
 
-class TelegramController extends ActivationController
+class TelegramController extends Controller
 {
+    public function __construct()
+    {
+    }
+
     public $message_type;
     public $text;
     public $chat_id;
     public $from_id;
-    public $user;
-
+    public $user = null;
+    use Activation , AdminSetting , CallBackQuery,CallBuy,CallSell , Channel,Group,Price,Text,Utility;
     public function index(Request $request)
     {
         $req = $request->toArray();
+        devLog($req);
+        if(\Cache::has($req['update_id'])){
+            die();
+        }else{
+            \Cache::put($req['update_id'],60,60);
+        }
+//        die();
         $this->message_type = messageType($req);
         if ($this->message_type == "callback_query") {
             $this->initCallBack($req);
             exit();
         }
         $this->text = $req['message']['text'] ?? "//**";
-        $this->chat_id = isset($req['message']['chat']['id']) ?? $req['message']['chat']['id'];
-        $this->from_id = isset($req['message']['from']['id']) ?? $req['message']['from']['id'];
-        if (!($user = Member::where('chat_id', $this->chat_id)->first())) {
-            $user = Member::create([
-                'chat_id' => $this->chat_id
-            ]);
+        $this->chat_id = $req['message']['chat']['id'] ?? "";
+        $this->from_id =$req['message']['from']['id'] ?? "";
+        if($req['message']['chat']['type']=="group"){
+            if (!($user = Member::where('chat_id', $this->from_id)->first()) ) {
+                $user = Member::create([
+                    'chat_id' => $this->from_id
+                ]);
+            }else{
+                $user = Member::where('chat_id', $this->from_id)->first();
+            }
+            $this->user = $user;
+        }elseif($req['message']['chat']['type']=="private"){
+            if (!($user = Member::where('chat_id', $this->chat_id)->first()) ) {
+                $user = Member::create([
+                    'chat_id' => $this->chat_id
+                ]);
+            }else{
+                $user = Member::where('chat_id', $this->chat_id)->first();
+            }
+            $this->user = $user;
+        }else{
+            exit();
         }
-        $this->user = $user;
-        if($this->user->admin){
-            switch ($this->user->state){
+
+        if($this->text =="/id"){
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>"chat id : ".$this->chat_id. "\n from id : ".$this->from_id
+            ]);
+            exit();
+        }
+        if ($this->text == "/start" || $this->text == 'بازگشت ↪️') {
+            $this->start();
+            exit();
+        }
+
+        if ($this->user->admin) {
+            switch ($this->user->state) {
 
             }
-            switch ($this->text){
+            switch ($this->text) {
                 case "/panel":
                     $this->iniAdmin();
                     break;
 
             }
         }
-        if(getConfig('channel')!=false){
+        if (getConfig('channel') != false) {
             if (!joinCheck($this->chat_id, getConfig('channel'))) {
                 sendMessage([
                     'chat_id' => $this->chat_id,
@@ -52,10 +91,7 @@ class TelegramController extends ActivationController
             }
         }
 
-        if ($this->text == "/start" || $this->text == 'بازگشت ↪️') {
-            $this->start();
-            exit();
-        }
+
         switch ($this->user->state) {
             case "SendPhone":
                 $this->receivePhone($req);

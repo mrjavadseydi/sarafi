@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class  AdminSettingController extends UtilityController
+use App\Http\Controllers\UtilityController;
+trait  AdminSetting
 {
     public function initAdmin(){
         setState($this->chat_id,"adminMenu");

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class TextController extends ChannelController
+use App\Http\Controllers\ChannelController;
+trait Text
 {
     //
 }

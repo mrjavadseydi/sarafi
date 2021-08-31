@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-class ChannelController extends GroupController
+use App\Http\Controllers\GroupController;
+trait Channel
 {
     public function initChannel(){
         sendMessage([
