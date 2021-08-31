@@ -86,7 +86,7 @@ trait  CallBackQuery
     }
     public function blockUser($chat_id){
         Member::where('chat_id',$chat_id)->update([
-            'block'=>true
+            'blocked'=>true
         ]);
     }
     public function payToUser($id,$user_id,$chat_id,$message_id,$old_text){

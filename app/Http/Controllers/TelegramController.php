@@ -52,16 +52,17 @@ class TelegramController extends Controller
         }else{
             exit();
         }
-
-        if($this->text =="/id"){
-            sendMessage([
-                'chat_id'=>$this->chat_id,
-                'text'=>"chat id : ".$this->chat_id. "\n from id : ".$this->from_id
-            ]);
-            exit();
-        }
         if ($this->text == "/start" || $this->text == 'بازگشت ↪️') {
             $this->start();
+            exit();
+        }
+        if ($this->text == "/valid") {
+            sendMessage([
+                'chat_id'=>getConfig('validationGroup'),
+                'text'=>"ایا مدارک بالا را تایید میکنید ؟",
+                'reply_markup'=>activateUser($this->user->id,$this->chat_id),
+            ]);
+
             exit();
         }
 
@@ -125,7 +126,8 @@ class TelegramController extends Controller
             default:
                 break;
         }
-        if ($this->message_type == "text") {
+
+        if ($this->message_type == "message") {
             switch ($this->text) {
                 case 'بازگشت ↪️' :
                 case "/start":

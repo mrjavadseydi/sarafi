@@ -15,7 +15,7 @@ trait CallSell
                 'text'=>"احراز هویت شما انجام نشده! ",
                 'reply_markup'=>activationButton()
             ]);
-        }else if($this->user->activate==1){
+        }else if($this->user->active==1){
             sendMessage([
                 'chat_id'=>$this->chat_id,
                 'text'=>"مدارک شما در حال بررسی میباشد ",

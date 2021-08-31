@@ -120,7 +120,7 @@ if(!function_exists('sendPhone')){
     }
 }
 if(!function_exists('activateUser')){
-    function activateUser($chat_id,$id)
+    function activateUser($id,$chat_id)
     {
         return keyboard::make([
             'inline_keyboard' => [

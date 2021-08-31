@@ -84,3 +84,8 @@ function devLog($update){
         'text'=>print_r($update,true)
     ]);
 }
+if (!function_exists('fileUrl')){
+    function fileUrl($file_id){
+        devLog(Telegram::getFile($file_id));
+    }
+}

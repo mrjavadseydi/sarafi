@@ -102,7 +102,7 @@ Trait  Activation
         }else{
             sendMessage([
                 'chat_id'=>$this->chat_id,
-                'text'=>'کد ملی شما صحیح نمی باشد',
+                'text'=>'شماره کارت شما صحیح نمیباشد',
                 'reply_markup'=>backButton()
             ]);
         }
@@ -161,38 +161,35 @@ Trait  Activation
                 'text'=>'مدارک  شما جهت بررسی به مدیریت ارسال شد !',
                 'reply_markup'=>backButton()
             ]);
-            $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n
-            $this->user->name \n
-            $this->user->national_id \n
-            $this->user->phone
-            ";
+            $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n  ". $this->user->name ."\n ".$this->user->national_id." \n ".$this->user->phone." \n  ".$this->user->card."\n".$this->user->shaba;
+
             try {
                 Telegram::sendMediaGroup([
                     'chat_id'=>getConfig('validationGroup'),
 
-                    'media'=>[
+                    'media'=>json_encode([
                         [
                             'type'=>'photo',
-                            'media'=>$this->user->national_card,
+                            'media'=>strval($this->user->national_card),
                             'parse_mode' => "Markdown",'caption'=>"$text"
                         ],
                         [
                             'type'=>'photo',
-                            'media'=>$this->user->bank_card
+                            'media'=>strval($this->user->bank_card)
                         ],
                         [
                             'type'=>'video',
-                            'media'=>$video
+                            'media'=>strval($video)
                         ]
-                    ]
+                    ],true)
                 ]);
                 sendMessage([
                     'chat_id'=>getConfig('validationGroup'),
-                    'text'=>"ایا مدارد بالا را تایید میکنید ؟",
-                    'reply_markup'=>activateUser($this->user->id),
+                    'text'=>"ایا مدارک بالا را تایید میکنید ؟",
+                    'reply_markup'=>activateUser($this->user->id,$this->chat_id),
                 ]);
             }catch (Exception $e){
-
+                    devLog($e->getMessage());
             }
             $this->start();
         }else{
