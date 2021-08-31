@@ -46,11 +46,11 @@ if (!function_exists('editMessageText')){
 }
 if (!function_exists('sendPhoto')){
     function sendPhoto($arr){
-        try{
+//        try{
             return Telegram::sendPhoto($arr);
-        }catch (Exception $e){
-
-        }
+//        }catch (Exception $e){
+//
+//        }
     }
 }
 if(!function_exists('messageType')) {
@@ -84,8 +84,4 @@ function devLog($update){
         'text'=>print_r($update,true)
     ]);
 }
-if (!function_exists('fileUrl')){
-    function fileUrl($file_id){
-        devLog(Telegram::getFile($file_id));
-    }
-}
+

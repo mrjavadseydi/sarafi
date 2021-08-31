@@ -83,6 +83,17 @@ Trait  Activation
         ]);
         sendMessage([
             'chat_id'=>$this->chat_id,
+            'text'=>'لطفا نام و نام خانودگی خود را ارسال کنید',
+            'reply_markup'=>backButton()
+        ]);
+        setState($this->chat_id,'SendName');
+    }
+    public function receiveName(){
+        Member::where('chat_id',$this->chat_id)->update([
+            'name'=>$this->text
+        ]);
+        sendMessage([
+            'chat_id'=>$this->chat_id,
             'text'=>'لطفا شماره کارت خود را ارسال کنید',
             'reply_markup'=>backButton()
         ]);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use \Illuminate\Support\Facades\Cache ;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TelegramController extends Controller
 {
@@ -18,6 +19,7 @@ class TelegramController extends Controller
     public function index(Request $request)
     {
         $req = $request->toArray();
+//        devLog('asdfasdf');
         if(Cache::has($req['update_id'])){
             die();
         }else{
@@ -98,6 +100,9 @@ class TelegramController extends Controller
                 break;
             case "SendShaba":
                 $this->receiveShaba();
+                break;
+            case "SendName":
+                $this->receiveName();
                 break;
             case "SendCardNumber":
                 $this->receiveCard();

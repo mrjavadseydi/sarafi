@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 
 });
-Route::any('/telegram',[\App\Http\Controllers\TelegramController::class,'index'])->name('telegram');
+Route::any('/telegram1',[\App\Http\Controllers\TelegramController::class,'index'])->name('telegram');

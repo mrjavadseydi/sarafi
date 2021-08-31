@@ -1,6 +1,6 @@
 <?php
 return [
-    'AccountID' => "1229575",
-    'PassPhrase' => "test",
-    'Payer_Account '=> 'test'
+    'AccountID' => env('perfect_member_id'),
+    'PassPhrase' => env('perfect_account_pass'),
+    'Payer_Account '=> env('perfect_account_number')
 ];

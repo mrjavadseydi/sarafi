@@ -63,18 +63,20 @@ trait CallSell
             $photo = end($req["message"]['photo'])['file_id'];
             $sell_id = Cache::pull('sendResid'.$this->chat_id);
             $sell = Sell::whereId($sell_id)->first();
-            $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n
-            $this->user->name \n
-            $this->user->national_id \n
-            $this->user->phone \n
-            ".number_format($sell->price)."
-            $sell->amount \$
+            $text = "[$this->chat_id](tg://user?id=$this->chat_id) \n".$this->user->name." \n".$this->user->phone." \n".number_format($sell->price)."\n $sell->amount \$
             ";
+
             sendPhoto([
                 'chat_id'=>getConfig('residGroup'),
                 'caption'=>$text,
-                'photo'=>$photo,
+                'photo'=>strval($photo),
+                'parse_mode' => "Markdown",
+            ]);
+            sendMessage([
+                'chat_id'=>getConfig('residGroup'),
+                'text'=>"ایا تایید میکنید تا کاربر ووچر را دریافت کند؟",
                 'reply_markup'=>acceptPay($this->chat_id,$sell_id)
+
             ]);
             $sell->update([
                 'photo'=>$photo
