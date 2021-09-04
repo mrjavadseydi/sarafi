@@ -15,6 +15,7 @@ class AddFeildToSells extends Migration
     {
         Schema::table('sells', function (Blueprint $table) {
             $table->string('paymentNumber')->nullable();
+            $table->integer('message_id')->nullable();
         });
     }
 
