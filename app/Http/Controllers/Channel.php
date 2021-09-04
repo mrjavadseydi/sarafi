@@ -22,6 +22,5 @@ trait Channel
             'reply_markup'=>adminButton()
         ]);
         setState($this->chat_id,'adminMenu');
-
     }
 }

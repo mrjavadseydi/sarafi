@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
-use \Illuminate\Support\Facades\Cache ;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class TelegramController extends Controller
 {
@@ -15,15 +14,16 @@ class TelegramController extends Controller
     public $chat_id;
     public $from_id;
     public $user = null;
-    use Activation , AdminSetting , CallBackQuery,CallBuy,CallSell , Channel,Group,Price,Text,Utility;
+    use Activation, AdminSetting, CallBackQuery, CallBuy, CallSell, Channel, Group, Price, Text, Utility;
+
     public function index(Request $request)
     {
         $req = $request->toArray();
 //        devLog('asdfasdf');
-        if(Cache::has($req['update_id'])){
+        if (Cache::has($req['update_id'])) {
             die();
-        }else{
-            Cache::put($req['update_id'],60,60);
+        } else {
+            Cache::put($req['update_id'], 60, 60);
         }
         $this->message_type = messageType($req);
         if ($this->message_type == "callback_query") {
@@ -32,49 +32,78 @@ class TelegramController extends Controller
         }
         $this->text = $req['message']['text'] ?? "//**";
         $this->chat_id = $req['message']['chat']['id'] ?? "";
-        $this->from_id =$req['message']['from']['id'] ?? "";
-        if($req['message']['chat']['type']=="group"){
-            if (!($user = Member::where('chat_id', $this->from_id)->first()) ) {
+        $this->from_id = $req['message']['from']['id'] ?? "";
+        if ($req['message']['chat']['type'] == "group") {
+            if (!($user = Member::where('chat_id', $this->from_id)->first())) {
                 $user = Member::create([
                     'chat_id' => $this->from_id
                 ]);
-            }else{
+            } else {
                 $user = Member::where('chat_id', $this->from_id)->first();
             }
             $this->user = $user;
-        }elseif($req['message']['chat']['type']=="private"){
-            if (!($user = Member::where('chat_id', $this->chat_id)->first()) ) {
+        } elseif ($req['message']['chat']['type'] == "private") {
+            if (!($user = Member::where('chat_id', $this->chat_id)->first())) {
                 $user = Member::create([
                     'chat_id' => $this->chat_id
                 ]);
-            }else{
+            } else {
                 $user = Member::where('chat_id', $this->chat_id)->first();
             }
             $this->user = $user;
-        }else{
+        } else {
             exit();
         }
         if ($this->text == "/start" || $this->text == 'بازگشت ↪️') {
             $this->start();
             exit();
         }
-        if ($this->text == "/valid") {
-            sendMessage([
-                'chat_id'=>getConfig('validationGroup'),
-                'text'=>"ایا مدارک بالا را تایید میکنید ؟",
-                'reply_markup'=>activateUser($this->user->id,$this->chat_id),
-            ]);
-
-            exit();
-        }
-
         if ($this->user->admin) {
             switch ($this->user->state) {
-
+                case "setBuyPrice":
+                    $this->setBuyPrice();
+                    break;
+                case "setSellPrice":
+                    $this->setSellPrice();
+                    break;
+                case "setChannel":
+                    $this->setChannel();
+                    break;
+                case "setResidGroup":
+                    $this->setResidGroupId();
+                    break;
+                case "setValidationGroup":
+                    $this->setValidationGroup();
+                    break;
+                case "setPayOutGroup":
+                    $this->setPayOutGroup();
+                    break;
             }
             switch ($this->text) {
                 case "/panel":
-                    $this->iniAdmin();
+                    $this->initAdmin();
+                    break;
+                case "تنظیم قیمت":
+                    $this->initSetPrice();
+                    break;
+                case "تنظیم گروه":
+                    $this->setGroupMenu();
+                    break;
+                case "تنظیم متن":
+                    $this->setTextMenu();
+                    break;
+                case "تنظیم کانال":
+                    $this->initChannel();
+                    break;
+                case "گروه خرید":
+                    $this->setResidGroup();
+                    break;
+                case "گروه فروش":
+                    $this->setPayOutGroup();
+                    break;
+                case "گروه احراز هویت":
+                    $this->setValidationGroup();
+
                     break;
 
             }
