@@ -12,7 +12,7 @@ trait Group
             'text'=>"ایدی گروه را ارسال کنید",
             'reply_markup'=>backButton()
         ]);
-        setState($this->chat_id,'setResidGroup');
+        setState($this->chat_id,'setResidGroupId');
     }
     public function setResidGroupId(){
         setConfig('residGroup',$this->text);
@@ -29,7 +29,7 @@ trait Group
             'text'=>"ایدی گروه را ارسال کنید",
             'reply_markup'=>backButton()
         ]);
-        setState($this->chat_id,'setValidationGroup');
+        setState($this->chat_id,'setValidationGroupId');
     }
     public function setValidationGroupId(){
         setConfig('validationGroup',$this->text);
@@ -46,7 +46,7 @@ trait Group
             'text'=>"ایدی گروه را ارسال کنید",
             'reply_markup'=>backButton()
         ]);
-        setState($this->chat_id,'setPayOutGroup');
+        setState($this->chat_id,'setPayOutGroupId');
     }
     public function setPayOutGroupId(){
         setConfig('payOutGroup',$this->text);

@@ -14,7 +14,7 @@ class TelegramController extends Controller
     public $chat_id;
     public $from_id;
     public $user = null;
-    use Activation, AdminSetting, CallBackQuery, CallBuy, CallSell, Channel, Group, Price, Text, Utility;
+    use Activation, AdminSetting, CallBackQuery, CallBuy, CallSell, Channel, Group, Price, Text, Utility,SendAll;
 
     public function index(Request $request)
     {
@@ -69,14 +69,32 @@ class TelegramController extends Controller
                 case "setChannel":
                     $this->setChannel();
                     break;
-                case "setResidGroup":
+                case "setResidGroupId":
                     $this->setResidGroupId();
                     break;
-                case "setValidationGroup":
-                    $this->setValidationGroup();
+                case "setValidationGroupId":
+                    $this->setValidationGroupId();
                     break;
-                case "setPayOutGroup":
-                    $this->setPayOutGroup();
+                case "setPayOutGroupId":
+                    $this->setPayOutGroupId();
+                    break;
+                case "setHelpText":
+                    $this->setHelpText();
+                    break;
+                case "setContactUsText":
+                    $this->setContactUsText();
+                    break;
+                case "setFaqText":
+                    $this->setFaqText();
+                    break;
+                case "setRoleText":
+                    $this->setRoleText();
+                    break;
+                case "sendAllReceive":
+                    $this->sendAllReceive();
+                    break;
+                case "sendAllConfirm":
+                    $this->sendAllConfirm();
                     break;
             }
             switch ($this->text) {
@@ -103,8 +121,21 @@ class TelegramController extends Controller
                     break;
                 case "گروه احراز هویت":
                     $this->setValidationGroup();
-
                     break;
+                case "تماس با ما":
+                    $this->setContactUs();
+                    break;
+                case "سوالات متداول":
+                    $this->setFaq();
+                    break;
+                case "راهنما":
+                    $this->setHelp();
+                    break;
+                case "قوانین":
+                    $this->setRole();
+                    break;
+                case "ارسال همگانی":
+                    $this->sendAllInit();
 
             }
         }
@@ -192,7 +223,7 @@ class TelegramController extends Controller
                     $this->getRole();
                     break;
                 case  "👤 پروفایل کاربری":
-                    $this->getProfile();
+                    $this->profile();
                     break;
                 case "💸 خرید/فروش های من":
                     $this->userTransaction();

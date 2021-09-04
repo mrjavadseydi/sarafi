@@ -9,6 +9,13 @@ if(!function_exists('backButton')){
         return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
     }
 }
+if(!function_exists('ConfirmAndBackButton')){
+    function ConfirmAndBackButton()
+    {
+        $btn = Keyboard::button([['بازگشت ↪️','✅تایید']]);
+        return Keyboard::make(['keyboard' => $btn, 'resize_keyboard' => true, 'one_time_keyboard' => true]);
+    }
+}
 
 if(!function_exists('menuButton')){
     function menuButton()
