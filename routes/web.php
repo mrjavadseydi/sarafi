@@ -18,4 +18,4 @@ Route::get('/', function () {
 });
 Route::any('/telegram1',[\App\Http\Controllers\TelegramController::class,'index'])->name('telegram');
 Route::any('callback',[\App\Http\Controllers\GateWayController::class,'verify'])->name('gateway.callback');
-Route::get('PayMent',[\App\Http\Controllers\GateWayController::class,'init'])->name('gateway.init');
+Route::get('PayMent/{id}',[\App\Http\Controllers\GateWayController::class,'init'])->name('gateway.init');

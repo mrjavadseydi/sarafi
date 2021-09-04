@@ -33,23 +33,20 @@ trait CallSell
     public function receiveSellCount(){
         if(is_numeric($this->text)){
             $price =round(getConfig('sellPrice') * $this->text , 1);
-            $card = getConfig('card');
-            $bank = getConfig('bank');
-            $holder = getConfig('holder');
-            $text = "هزینه قابل پرداخت : $price\n مبلغ مورد نظر را به شماره کارت  $card  بانک $bank  به نام $holder پرداخت و رسید ان را در همین بخش ارسال نمایید";
-            sendMessage([
-                'chat_id'=>$this->chat_id,
-                'text'=>$text,
-                'reply_markup'=>backButton()
-            ]);
-            setState($this->chat_id,'GiveResid');
             $sell = Sell::create([
                 'chat_id'=>$this->chat_id,
                 'amount'=>$this->text,
                 'price'=>$price,
                 'status'=>0
             ]);
-            Cache::put('sendResid'.$this->chat_id,$sell->id);
+            $text = "هزینه قابل پرداخت : $price \n جهت پرداخت روی دکمه زیر کلیک کنید ! \n پس از پرداخت ووچر برای شما ارسال خواهد شد";
+            sendMessage([
+                'chat_id'=>$this->chat_id,
+                'text'=>$text,
+                'reply_markup'=>payUrlButton($sell->id)
+            ]);
+            nullState($this->chat_id);
+            $this->start();
         }else{
             sendMessage([
                 'chat_id'=>$this->chat_id,

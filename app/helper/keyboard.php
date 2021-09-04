@@ -143,6 +143,22 @@ if(!function_exists('activateUser')){
         ]);
     }
 }
+if(!function_exists('payUrlButton')){
+    function payUrlButton($id)
+    {
+        return keyboard::make([
+            'inline_keyboard' => [
+                [
+                    [
+                        'text' => "پرداخت",
+                        'url' =>route('gateway.init',$id)
+                    ]
+
+                ]
+            ],
+        ]);
+    }
+}
 if(!function_exists('acceptPay')){
     function acceptPay($chat_id,$id)
     {
