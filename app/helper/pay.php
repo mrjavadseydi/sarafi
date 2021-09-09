@@ -10,7 +10,7 @@
         )
     );
     $context = stream_context_create($opts);
-    $voucher = file_get_contents("https://perfectmoney.com/acct/ev_create.asp?AccountID=".$AccountID."&PassPhrase=".$PassPhrase."&Payer_Account=".$Payer_Account."&Amount=".$Amount, false);
+    $voucher = http::get("https://perfectmoney.com/acct/ev_create.asp?AccountID=".$AccountID."&PassPhrase=".$PassPhrase."&Payer_Account=".$Payer_Account."&Amount=".$Amount)->body();
     $dom = new \DOMDocument();
     $dom->loadHTML($voucher);
     $output = [];
@@ -36,7 +36,8 @@ function ActiveVoucher($ev_number, $ev_code)
     );
 
     $context = stream_context_create($opts);
-    $voucher = file_get_contents("https://perfectmoney.is/acct/ev_activate.asp?AccountID=" . $AccountID . "&PassPhrase=" . $PassPhrase . "&Payee_Account=" . $Payer_Account . "&ev_number=" . $ev_number . "&ev_code=" . $ev_code, false,$context);
+
+    $voucher = http::get("https://perfectmoney.is/acct/ev_activate.asp?AccountID=" . $AccountID . "&PassPhrase=" . $PassPhrase . "&Payee_Account=" . $Payer_Account . "&ev_number=" . $ev_number . "&ev_code=" . $ev_code)->body();
 
     if (strpos($voucher, 'Error') !== false)
         return false;

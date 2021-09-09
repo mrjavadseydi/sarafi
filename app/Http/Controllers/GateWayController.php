@@ -22,10 +22,11 @@ class GateWayController extends Controller
             'callBackUrl'=>route('gateway.callback'),
             'invoiceNumber'=>$id,
             'payerName' => $user->name,
-            'payerMobile' => $user->phone,
+//            'payerMobile' => $user->phone,
             'description' =>"خرید ".$order->amount." دلار پرفکت مانی",
         ];
         $request =$this->gateWay->paymentRequest($param);
+//        dd($request);
         if($request['status']){
             Sell::whereId($id)->update([
                 'paymentNumber'=>$request['paymentNumber']
